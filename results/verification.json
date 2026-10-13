@@ -1,0 +1,68 @@
+{
+  "arithmetic": "Python exact integers",
+  "g_logconcavity_and_recurrence": {
+    "all_pass": true,
+    "entries_inclusive": [
+      0,
+      8
+    ],
+    "lengths_inclusive": [
+      1,
+      8
+    ],
+    "records": 24309,
+    "sha256_canonical_jsonl": "d336eead632fd3f3b007dd6985fae3d0435c207c91755009646ddc50a705a15d"
+  },
+  "general_nested_boxes": {
+    "all_pass": true,
+    "generator": "SplitMix64 defined in verify.py; randbelow uses modulo",
+    "lengths_inclusive": [
+      1,
+      24
+    ],
+    "records": 50000,
+    "seed": 139105,
+    "sha256_canonical_jsonl": "51d669fd0bb89344b9e6753aa56d60b877ee77c5b2e064cfaa8297136e525e1d",
+    "u_entries_inclusive": [
+      0,
+      99
+    ],
+    "v_entries": "independent randbelow(u_i+1)"
+  },
+  "independent_coefficient_engine": {
+    "records": 341,
+    "sha256_canonical_jsonl": "d88936ec066034851ba43e9324007a5ad9f6c87ba002a6fc72b857c77f63554c"
+  },
+  "literal_rook_boards": {
+    "all_agree": true,
+    "max_cells": 15,
+    "records": 683,
+    "sha256_canonical_jsonl": "353da5128d266546290c412c47dbaa68a95c8d8c03709d8a852f32bc3f7551b9",
+    "zero_polynomials": 358
+  },
+  "nearfull_multisets": {
+    "all_unimodal": true,
+    "entries_inclusive": [
+      1,
+      12
+    ],
+    "lengths_inclusive": [
+      2,
+      8
+    ],
+    "records": 125957,
+    "sha256_canonical_jsonl": "6bb2812d7c792ac671421f9c8a8219e3a7da18aa6967eb0dc9348af63add85d4"
+  },
+  "one_coordinate_shifted_ratios": {
+    "all_pass": true,
+    "records": 102960,
+    "sha256_canonical_jsonl": "e45f91b69dc7d2d7b3c9f575f58877d0d4ae5be9a0dab2e5ab9ebd7e7fcdbb8d"
+  },
+  "proof_dependency": "None; these are finite checks, not the infinite proof.",
+  "random_adjacent_ratios_and_g_logconcavity": {
+    "all_pass": true,
+    "records": 10000,
+    "sha256_canonical_jsonl": "804976d35566e376946032af55176880457b1a3dcff0b6e0c1b67981f076e0ac"
+  },
+  "record_encoding": "compact ASCII JSON array + LF; SHA256; deterministic loop order"
+}

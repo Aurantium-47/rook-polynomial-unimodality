@@ -1,0 +1,12 @@
+PUBLIC_FILES.txt
+README.md
+REFERENCES.md
+REPRODUCIBILITY.md
+RIGHTS.md
+SHA256SUMS
+proof.pdf
+proof.tex
+results/board_cases.json
+results/examples.json
+results/verification.json
+verify.py

@@ -1,0 +1,527 @@
+\documentclass[11pt]{article}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage[left=1in,right=1in,top=0.85in,bottom=0.85in]{geometry}
+\usepackage{microtype,booktabs,array}
+\usepackage{xurl}
+\usepackage[hidelinks,pdftitle={Unimodality of nested-box differences and near-full q-rook polynomials},pdfauthor={Aurantium},pdfsubject={A proof via nested-box differences}]{hyperref}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{Near-full $q$-rook unimodality}
+\fancyhead[R]{Aurantium \textbar\ 13 October 2026}
+\fancyfoot[C]{\thepage}
+\setlength{\headheight}{14pt}
+\setlength{\parskip}{0.35em}
+\setlength{\emergencystretch}{2em}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{proposition}{Proposition}
+\newtheorem{corollary}{Corollary}
+\newcommand{\NN}{\mathbb Z_{\ge0}}
+\newcommand{\inv}{\operatorname{inv}}
+\newcommand{\supp}{\operatorname{supp}}
+\newcommand{\qint}[1]{[#1]_q}
+\newcommand{\BoxP}{P}
+\title{Unimodality of nested-box differences\\
+and near-full $q$-rook polynomials}
+\author{Aurantium}
+\date{13 October 2026}
+\begin{document}
+\maketitle
+\thispagestyle{fancy}
+
+\section*{Introduction}
+For every integer $\ell\ge1$ and partition
+$\lambda=(\lambda_1\ge\cdots\ge\lambda_\ell>0)$, let
+\[
+ B_\lambda=\{(i,j):1\le i\le\ell,\ 1\le j\le\lambda_i\}.
+\]
+A placement is a set of cells with at most one cell in each row and column.
+A rook $(a,b)$ cancels the cells $(i,b)$ with $i\le a$ and $(a,j)$ with
+$j\le b$. For a placement $w$, let $\inv(w)$ count the cells not cancelled
+by any rook, and set
+\[
+ R_r(\lambda;q)=\sum_{\substack{w\subseteq B_\lambda\ \text{a placement}\\ |w|=r}}
+ q^{\inv(w)}\in\NN[q].
+\]
+Here $q$ is an indeterminate. A coefficient sequence is unimodal when it
+weakly increases and then weakly decreases; zero polynomials and zero
+padding are allowed. The target is
+\[
+ \boxed{R_{\ell-1}(\lambda;q)\text{ is unimodal for every such }\lambda.}
+\]
+This is the final question in Lewis--Morales, arXiv:2410.19714v3,
+Remark 6 (page 5); their rook conventions are on pages 1--2.
+The setting is finite integer combinatorics. No field, characteristic,
+regularity, or asymptotic hypothesis is required.
+
+\section*{Main result}
+The near-full polynomial is unimodal for every Ferrers board. The proof
+establishes a stronger statement about nested products of finite chains.
+It uses neither a Lefschetz property nor log-concavity of the rook polynomial,
+and does not depend on finite computations. The product-difference reduction
+and Hilbert-series interpretation originated in unpublished preliminary
+research notes; both are derived explicitly below.
+
+\begin{theorem}[Nested-box difference]\label{thm:boxes}
+Let $n\ge1$ and $u,v\in\NN^n$ satisfy $v_i\le u_i$ for every $i$. Put
+\[
+ P_u(q)=\prod_{i=1}^n(1+q+\cdots+q^{u_i}).
+\]
+Then $P_u(q)-P_v(q)$ has nonnegative, unimodal coefficients.
+\end{theorem}
+The theorem includes $u=v$, where the difference is zero. Its application to
+near-full rook polynomials has $u_i=a_i$ and $v_i=a_i-1$, after separating
+negative and zero $a_i$. The proof is entirely elementary; all auxiliary
+inequalities and the chain decomposition used below are proved here.
+
+\subsection*{1. Checking the rook reduction and boundary cases}
+Write the row lengths increasingly as $b_1\le\cdots\le b_\ell$ and set
+$a_i=b_i-i+1$. Write $\qint m=1+q+\cdots+q^{m-1}$ for $m\ge1$ and
+$\qint0=0$.
+
+\begin{proposition}[Near-full product difference]\label{prop:rook}
+If some $a_i<0$, then $R_{\ell-1}(\lambda;q)=0$. Otherwise,
+\begin{equation}\label{eq:rook}
+ R_{\ell-1}(\lambda;q)=\prod_{i=1}^{\ell}\qint{a_i+1}
+                         -\prod_{i=1}^{\ell}\qint{a_i}.
+\end{equation}
+\end{proposition}
+\begin{proof}
+If $a_i<0$, the $i$ shortest rows have at most $b_i\le i-2$ columns
+available. A placement with only one omitted row must put at least $i-1$
+rooks into those rows, which is impossible.
+
+Assume henceforth that every $a_i\ge0$. Process rows from the shortest
+(bottom) row to the longest (top) row, and fix the unique omitted row $i$.
+Every column used earlier exists in the current row and has already been
+cancelled there. In a row with $w$ remaining columns, placing a rook leaves
+$0,1,\ldots,w-1$ uncancelled cells, once each as the rook position varies.
+Its weight sum is $\qint w$. No later rook can cancel a cell in this lower
+row. Thus choices may be summed row by row, since the number $w$ is
+independent of the previous column choices.
+
+Before row $i$, the available widths are $a_j$; after row $i$, they are
+$a_j+1$. The omitted row itself contributes $a_i$ uncancelled cells. Its
+contribution is therefore
+\[
+ q^{a_i}\prod_{j<i}\qint{a_j}\prod_{j>i}\qint{a_j+1}.
+\]
+A width zero gives a zero factor, correctly excluding that placement type.
+Summing over $i$, and using $\qint{a_i+1}-\qint{a_i}=q^{a_i}$, gives the
+telescoping product identity \eqref{eq:rook}.
+\end{proof}
+If some $a_i=0$, the second product vanishes and the first is a product of
+$q$-integers. Such products are symmetric and unimodal, as also follows
+from the lemmas below. If all $a_i\ge1$, Theorem~\ref{thm:boxes} applies
+to $u=a$ and $v=a-(1,\ldots,1)$. This covers every board and every $\ell$.
+In particular, $\ell=1$ gives $R_0(\lambda;q)=q^{\lambda_1}$.
+
+The unrestricted positive-vector problem is not an artificial enlargement:
+any multiset of positive $a_i$ can be sorted increasingly and realized by
+$b_i=a_i+i-1$, then reversing the $b_i$ to make a partition.
+The basic non-log-concave example remains compatible with the result:
+$a=(1,3)$, corresponding to $\lambda=(4,1)$, gives
+\[
+ R_1((4,1);q)=q+q^2+2q^3+q^4.
+\]
+Its unimodality is not log-concavity, since $1^2<1\cdot2$ at degree 2.
+
+\subsection*{2. Two elementary interval-sum inequalities}
+For a finitely supported sequence $h=(h_i)_{i\in\mathbb Z}$ of nonnegative
+real numbers, log-concavity means $h_i^2\ge h_{i-1}h_{i+1}$ for all $i$.
+``No internal zeros'' means its positive support is an integer interval.
+
+\begin{lemma}[Sliding and shrinking sums]\label{lem:interval}
+Suppose $h$ is log-concave with no internal zeros. For any integer $S$ and
+integer $m\ge0$, both sequences
+\[
+ U_k=\sum_{i=k-m}^{k}h_i,
+ \qquad
+ V_k=\sum_{i=k-m}^{S-k}h_i
+\]
+are log-concave, with an empty sum interpreted as zero.
+\end{lemma}
+\begin{proof}
+Fix an integer $t$. The sequence $w_t(i)=h_i h_{t-i}$ is symmetric about
+$t/2$ and nondecreasing as $i$ approaches $t/2$ from below. Indeed, on its
+positive support,
+\[
+ \frac{w_t(i+1)}{w_t(i)}=
+ \frac{h_{i+1}/h_i}{h_{t-i}/h_{t-i-1}}\ge1
+ \quad\text{if }2i+1\le t,
+\]
+because adjacent ratios of a positive log-concave sequence are
+nonincreasing. The zero extension preserves this conclusion.
+Consequently, a centered integer interval maximizes the sum of $w_t$
+among sets of the same cardinality; its sum also dominates every set
+of smaller cardinality.
+
+Let $I=[L,U]\cap\mathbb Z$. In $(\sum_Ih_i)^2$, the terms on the
+anti-diagonal $i+j=t$ sum over
+\[
+ J=I\cap(t-I),
+\]
+a centered interval about $t/2$.
+For the product of the sums over $I-1$ and $I+1$, the corresponding set
+is exactly $J-1$. The centered-interval comparison proves the sliding
+inequality after summing over all $t$.
+
+For the shrinking inequality, the neighboring intervals are
+$[L-1,U+1]$ and $[L+1,U-1]$. Put $d=U-L+1$.
+If $d\le2$, the latter interval is empty and the desired inequality is
+immediate; if the current interval is empty, its next shrinking interval
+is also empty. For $d\ge3$, the anti-diagonal cardinalities in the square
+and in the neighboring product are, respectively,
+\begin{align*}
+ |J|&=\max\{0,\min(t-2L+1,2U-t+1,d)\},\\
+ |J'|&=\max\{0,\min(t-2L+1,2U-t+1,d-2)\}.
+\end{align*}
+These formulas simply count pairs of integers in intervals of lengths
+$d,d$, or $d+2,d-2$, whose sum is $t$. Thus $|J'|\le|J|$.
+Since $J$ is centered, its $w_t$ sum is at least the sum over $J'$.
+Summation over $t$ proves $V_k^2\ge V_{k-1}V_{k+1}$.
+\end{proof}
+
+\subsection*{3. Log-concavity of the lower-half first differences}
+For a nonnegative integer vector $w$ (including the empty vector), set
+$T=\sum_iw_i$, and write $p_w(k)=[q^k]P_w(q)$, extended by zero outside
+$0\le k\le T$. Define
+\begin{equation}\label{eq:gdef}
+ g_w(k)=
+ \begin{cases}
+ p_w(k)-p_w(k-1),&0\le k\le\lfloor T/2\rfloor,\\
+ 0,&\text{otherwise}.
+ \end{cases}
+\end{equation}
+The truncation is part of the definition, not an assertion about the
+signs of the untruncated differences.
+
+\begin{lemma}[Difference profile]\label{lem:g}
+For every $w$, $g_w$ is nonnegative and log-concave, and is positive exactly
+on an interval $\{0,1,\ldots,K_w\}$. In particular $g_w(0)=1$ and $P_w$
+is symmetric and unimodal.
+More explicitly, let $w=(z,m)$, $S=\sum z_i$, and $h=g_z$. Then for every
+integer $k\ge0$,
+\begin{equation}\label{eq:rec}
+ g_{(z,m)}(k)=\sum_{i=k-m}^{\min(k,S-k)}h_i.
+\end{equation}
+If $\supp(h)=\{0,\ldots,r\}$, its support endpoint is
+\begin{equation}\label{eq:support}
+ K_{(z,m)}=\min\left\{m+r,\ S,\ \left\lfloor\frac{S+m}{2}\right\rfloor\right\}.
+\end{equation}
+\end{lemma}
+\begin{proof}
+Induct on the number of coordinates. For the empty vector, $P=1$ and
+$g(0)=1$, with all other values zero. Each $P_z$ is symmetric about $S/2$,
+since every factor is symmetric. Symmetry and telescoping give
+\[
+ p_z(k)=\sum_{i=0}^{\min(k,S-k)}h_i,
+\]
+where a negative upper endpoint means zero. For
+$0\le k\le\lfloor(S+m)/2\rfloor$, multiplication by
+$1+q+\cdots+q^m$ gives
+\[
+ g_{(z,m)}(k)=p_z(k)-p_z(k-m-1),
+\]
+which is \eqref{eq:rec}; here $k-m-1<S/2$ and is smaller than both
+$k$ and $S-k$. For larger $k$, the interval in \eqref{eq:rec} is empty,
+so the same identity agrees with the stipulated truncation.
+
+By induction, $h$ is positive on $[0,r]$ and zero elsewhere, with
+$r\le\lfloor S/2\rfloor$. The interval in \eqref{eq:rec} meets $[0,r]$
+exactly when
+\[
+ k\le m+r,\qquad k\le S,\qquad 2k\le S+m.
+\]
+This proves nonnegativity and \eqref{eq:support}.
+
+To prove log-concavity, put $s=\lfloor S/2\rfloor$.
+For $k\le s$, \eqref{eq:rec} equals the sliding sum $U_k$ from
+Lemma~\ref{lem:interval}. For $k\ge s$, it equals the shrinking sum $V_k$:
+when $S=2s+1$ and $k=s$, the only extra term of $V_s$ is $h_{s+1}=0$.
+Thus all log-concavity inequalities except possibly the one centered at
+$s$ follow directly from that lemma. At $s$, we have
+\[
+ g_{(z,m)}(s-1)=U_{s-1},\quad g_{(z,m)}(s)=U_s,
+ \quad g_{(z,m)}(s+1)\le U_{s+1},
+\]
+which proves the missing inequality as well. If $s=0$, the inequality
+involving index $-1$ is automatic because that value is zero.
+The induction is complete. The last assertion follows from $g_w\ge0$
+and the symmetry of $P_w$.
+\end{proof}
+
+\subsection*{4. A shifted ratio that can cross a level only once}
+\begin{lemma}[One-coordinate comparison]\label{lem:one}
+Let $w'=w+e_j$. For $k\ge0$ on the positive support of $g_w$, the sequence
+\begin{equation}\label{eq:ratio}
+ \frac{g_{w'}(k+1)}{g_w(k)}
+\end{equation}
+is nonincreasing in $k$. Moreover, if $g_w(k)=0$ for $k\ge0$, then
+$g_{w'}(k+1)=0$.
+\end{lemma}
+\begin{proof}
+Permute coordinates so the changed coordinate is last. Write $w=(z,m)$,
+$S=\sum z_i$, $h=g_z$, and $f_m=g_{(z,m)}$.
+By \eqref{eq:support}, $K_{m+1}\le K_m+1$, proving the support assertion.
+For positive $f_m(k)$, the denominator and numerator of \eqref{eq:ratio}
+are interval sums with the same lower endpoint $L=k-m$ and respective
+upper endpoints
+\[
+ \min(k,S-k)\quad\text{and}\quad\min(k+1,S-k-1).
+\]
+There are three regimes.
+
+If $2k\le S-2$, the ratio is
+\begin{equation}\label{eq:early}
+ 1+\frac{h_{k+1}}{\sum_{i=k-m}^k h_i}\ge1.
+\end{equation}
+Where $h_{k+1}>0$, the added fraction is the reciprocal of
+\[
+ \sum_{j=1}^{m+1}\frac{h_{k+1-j}}{h_{k+1}}.
+\]
+For a positive log-concave sequence, every backward ratio
+$h_{t-j}/h_t$ is nondecreasing as $t$ increases. This follows by expressing
+it as a product of the nondecreasing ratios $h_{a-1}/h_a$; terms below
+index zero are zero until they enter the support. Thus the displayed sum
+is nondecreasing, and \eqref{eq:early} is nonincreasing. Once
+$h_{k+1}=0$, it stays zero as $k$ increases, and the ratio is $1$.
+
+If $S$ is odd and $k=(S-1)/2$, the upper endpoints coincide and the
+ratio is exactly $1$.
+
+If $2k\ge S$, put $U=S-k$. The ratio is
+\begin{equation}\label{eq:late}
+ 1-\frac{h_U}{\sum_{i=L}^U h_i}\le1.
+\end{equation}
+On the positive denominator support, $U\ge0$. If $h_U=0$, necessarily
+$U>r$, so the ratio is initially $1$. Once $h_U>0$, the subtracted
+fraction is the reciprocal of
+\[
+ \sum_{j=0}^{U-L}\frac{h_{U-j}}{h_U}.
+\]
+When $k$ increases by one, $U$ decreases by one, $L$ increases by one,
+and the range of $j$ shortens by two. Each surviving backward ratio
+weakly decreases by log-concavity. Hence this sum is nonincreasing, its
+reciprocal is nondecreasing, and \eqref{eq:late} is nonincreasing.
+
+The early ratios are at least $1$ and the late ratios at most $1$, with
+the possible odd-parity bridge equal to $1$. This proves the comparison
+across the transitions too. If the numerator reaches zero, the initial
+support property prevents any later positive numerator. All divisions
+above were restricted to positive denominators.
+\end{proof}
+
+\begin{lemma}[Coordinatewise comparison]\label{lem:many}
+Let $v\le u$ coordinatewise and $\delta=\sum_i(u_i-v_i)$. Then, for
+$s\ge0$ with $g_v(s)>0$,
+\begin{equation}\label{eq:many}
+ F(s)=\frac{g_u(s+\delta)}{g_v(s)}
+\end{equation}
+is nonincreasing in $s$. If $g_v(s)=0$ and $s\ge0$, then
+$g_u(s+\delta)=0$.
+\end{lemma}
+\begin{proof}
+Choose a path of $\delta$ unit coordinate increments
+$v=w^{(0)},w^{(1)},\ldots,w^{(\delta)}=u$. Repeated support inclusion
+from Lemma~\ref{lem:one} shows that a positive endpoint
+$g_u(s+\delta)$ forces every $g_{w^{(a)}}(s+a)$ to be positive. On this
+initial interval,
+\[
+ F(s)=\prod_{a=0}^{\delta-1}
+ \frac{g_{w^{(a+1)}}(s+a+1)}{g_{w^{(a)}}(s+a)}.
+\]
+Every factor is nonnegative and nonincreasing by Lemma~\ref{lem:one},
+so their product is nonincreasing. The numerator subsequently vanishes
+permanently by Lemma~\ref{lem:g}, giving a zero tail. Iterating support
+inclusion also proves the last assertion. If $\delta=0$, the ratio is
+identically $1$ wherever defined, so the statement remains valid.
+\end{proof}
+
+\subsection*{5. The upper-half coefficients of a box ideal}
+Rank the finite box
+$C(u)=\prod_i\{0,1,\ldots,u_i\}$ by $|x|=\sum_i x_i$; its total rank
+is $A=\sum_i u_i$. A lower ideal is a subset $J$ closed under decreasing
+coordinates.
+
+\begin{lemma}[Upper-half decrease]\label{lem:tail}
+For any lower ideal $J\subseteq C(u)$ and any integer $t>A/2$,
+\[
+ |\{x\in J:|x|=t\}|\le |\{x\in J:|x|=t-1\}|.
+\]
+\end{lemma}
+\begin{proof}
+We first construct a saturated symmetric chain decomposition of $C(u)$.
+In a rectangle $\{0,\ldots,p\}\times\{0,\ldots,m\}$, take the chain
+\[
+ (0,0),(1,0),\ldots,(p,0),(p,1),\ldots,(p,m).
+\]
+If both $p,m>0$, the remaining rectangle is
+$\{0,\ldots,p-1\}\times\{1,\ldots,m\}$. Translate its second coordinate
+down by one and repeat. This produces chains whose endpoint ranks sum
+to $p+m$. For a product of more chains, inductively take each symmetric
+chain of the earlier factors, whose endpoint ranks are $r$ and $S-r$,
+and tensor it with the next chain. Apply the rectangle construction to
+its length $S-2r$ and the new chain length. Shifting the ranks back by
+$r$ makes every new chain symmetric about $(S+m)/2$. This proves the
+required decomposition by induction.
+
+If such a chain contains an element of rank $t>A/2$, its initial rank is
+at most $A-t<t$, so this element has an immediate predecessor on the
+chain. A lower ideal contains that predecessor whenever it contains the
+element. Mapping each rank-$t$ element of $J$ to its predecessor is
+injective, since distinct chains are disjoint. This proves the inequality.
+\end{proof}
+
+\subsection*{6. Proof of the nested-box theorem}
+\begin{proof}[Proof of Theorem~\ref{thm:boxes}]
+The case $u=v$ is immediate. Otherwise put
+$A=\sum_i u_i$, $B=\sum_i v_i$, and $\delta=A-B>0$.
+Since both products are symmetric in their respective degrees, reversal
+in degree $A$ gives
+\begin{equation}\label{eq:reverse}
+ q^A\bigl(P_u(q^{-1})-P_v(q^{-1})\bigr)
+ =P_u(q)-q^\delta P_v(q)=:H(q).
+\end{equation}
+Write $c_i=u_i-v_i$. The polynomial $H$ counts the lower ideal
+\[
+ J=C(u)\setminus
+   \{x\in C(u):x_i\ge c_i\text{ for every }i\}.
+\]
+Indeed, the removed upper box is the translate $c+C(v)$ and has
+rank-generating polynomial $q^\delta P_v(q)$. Thus $H$ is coefficientwise
+nonnegative, and Lemma~\ref{lem:tail} proves that its coefficients are
+nonincreasing past $A/2$.
+
+It remains to check the first half. Let $h_t=[q^t]H(q)$ and $h_{-1}=0$.
+For $0\le t\le\lfloor A/2\rfloor$, we have
+$t-\delta\le B/2$; hence \eqref{eq:gdef} gives
+\begin{equation}\label{eq:Hdiff}
+ h_t-h_{t-1}=g_u(t)-g_v(t-\delta).
+\end{equation}
+For $t<\delta$, this is nonnegative. For $t\ge\delta$, set
+$s=t-\delta\ge0$. Where $g_v(s)>0$, the sign of \eqref{eq:Hdiff} is
+that of $F(s)-1$ from Lemma~\ref{lem:many}. Since $F$ is nonincreasing,
+these signs cannot return to positive after becoming negative.
+If $g_v(s)=0$, support inclusion gives $g_u(s+\delta)=0$ too, so the
+difference is zero. Thus the first-half coefficients weakly increase
+and then weakly decrease, with no later increase. Appending the
+nonincreasing upper half from Lemma~\ref{lem:tail} proves that $H$ is
+unimodal. Reversal preserves unimodality, including zero padding, and
+\eqref{eq:reverse} proves the theorem.
+\end{proof}
+Together with Proposition~\ref{prop:rook} and Lemma~\ref{lem:g}, this proves
+the exact near-full target, with no restriction on $\ell$ or the board size.
+
+\subsection*{7. Algebraic interpretation and limits of the conclusion}
+The same proof gives a characteristic-independent numerical corollary.
+For a field $K$, $u\in\NN^n$, and $0\le c_i\le u_i$,
+\[
+ K[x_1,\ldots,x_n]/
+ (x_1^{u_1+1},\ldots,x_n^{u_n+1},x_1^{c_1}\cdots x_n^{c_n})
+\]
+has Hilbert series
+\[
+ P_u(q)-q^{\sum_i c_i}P_{u-c}(q),
+\]
+and therefore has a unimodal Hilbert function. This follows by counting
+monomials, not by asserting a Lefschetz property. For the near-full
+positive-$a$ family, $c_i=1$ for every $i$.
+
+This distinction is necessary: Migliore--Mir\'o-Roig--Nagel, Theorem 4.3,
+give the non-WLP examples
+$K[x_1,\ldots,x_r]/(x_1^r,\ldots,x_r^r,x_1\cdots x_r)$ for $r\ge3$.
+They lie in the displayed family. Their failure of WLP is not a failure
+of the numerical unimodality proved here. No assertion is made that
+arbitrary-rank rook polynomials are unimodal; Lewis--Morales,
+Proposition 4, disproves that different statement.
+
+\subsection*{8. Exact computational checks and reproduction}
+The accompanying \texttt{verify.py} uses only the Python standard
+library and exact integers. It checks the reduction by literal placements
+and tests the auxiliary lemmas. The following counts and reported passes
+come from archived computation records. The complete suite was not rerun
+for this edition; the archived records do not independently certify every
+historical execution.
+\begin{center}
+\begin{tabular}{@{}p{0.66\linewidth}r@{}}
+\toprule
+Archived test family & Reported count\\
+\midrule
+Coefficient products against direct monomial enumeration & 341\\
+All nonempty partitions with at most 15 cells; literal rook cancellation & 683\\
+Zero polynomials among these boards & 358\\
+Positive multisets of lengths 2--8, entries 1--12; near-full unimodality & 125,957\\
+Nonnegative multisets of lengths 1--8, entries 0--8; $g$-log-concavity and recursion & 24,309\\
+Distinct one-coordinate increments of those multisets; shifted ratio and support & 102,960\\
+Deterministic broad nested-box pairs, dimensions 1--24, outer entries 0--99 & 50,000\\
+Additional large one-coordinate comparisons and $g$-log-concavity tests & 10,000\\
+\bottomrule
+\end{tabular}
+\end{center}
+The broad tests also check the composed ratio of
+Lemma~\ref{lem:many} directly. They include dimensions, parities, zero
+coordinates, equality cases, and highly unequal inner and outer sizes.
+These finite checks are diagnostics only; they are not premises of any
+lemma or theorem.
+
+To reproduce all tests, with assertions enabled, run from the package:
+\begin{verbatim}
+python verify.py --out-dir reproduced_results
+\end{verbatim}
+The deterministic generator, seed, enumeration order, and exact
+coefficient computations are specified in the source.
+\texttt{results/verification.json} records counts and SHA-256 digests of
+canonical JSON-line record streams, including the coefficient arrays.
+\texttt{results/board\_cases.json} contains every literal board result;
+\texttt{results/examples.json} gives exact edge examples and the first
+20 broad-test cases. Full larger streams can be regenerated exactly;
+they are not required to verify the proof. The report and supplied
+results correspond to the default 50,000-case run, not the optional
+shortened run.
+
+\subsection*{9. Attribution and status}
+The proof was developed with AI assistance. This manuscript has not undergone
+independent expert peer review or formal proof checking. No exhaustive
+literature-priority claim is made for the nested-box theorem.
+
+The product-difference reduction and monomial Hilbert-series interpretation
+were present in unpublished preliminary research notes. The argument developed
+here proves the interval-sum inequalities, lower-half difference-profile
+log-concavity, and shifted comparisons, and combines them with the explicitly
+constructed symmetric chain decomposition.
+
+\section*{References}
+\noindent
+Joel Brewster Lewis and Alejandro H. Morales,
+\emph{Garsia--Remmel $q$-rook numbers are not always unimodal},
+arXiv:2410.19714v3. Definitions, pages 1--2; Example 3 and Proposition 4;
+Remark 6, page 5.
+\url{https://arxiv.org/abs/2410.19714v3}.
+
+\noindent
+Juan C. Migliore, Rosa M. Mir\'o-Roig, and Uwe Nagel,
+\emph{Monomial ideals, almost complete intersections and the Weak
+Lefschetz Property}, arXiv:0811.1023; \emph{Transactions of the American
+Mathematical Society} \textbf{363} (2011), 229--257.
+Theorem 4.3 supplies the WLP obstruction mentioned above.
+\url{https://arxiv.org/abs/0811.1023}.
+
+\noindent
+Bek Chase and Filip Jonsson Kling,
+\emph{The strong Lefschetz property for some monomial almost complete
+intersections}, arXiv:2507.18516v1 (arXiv abstract title:
+\emph{Monomial Almost Complete Intersections and the Strong Lefschetz
+Property}). Relevant background: Definition 2.1, Theorem 3.1, Lemma 3.3,
+and Proposition 4.2. These are not invoked to prove the unrestricted
+target.
+\url{https://arxiv.org/abs/2507.18516v1}.
+
+\noindent
+\emph{Unpublished preliminary research notes}: starting product-difference
+reduction, Hilbert-series interpretation, and finite computations.
+The reduction and Hilbert-series interpretation are derived in full above.
+\end{document}
